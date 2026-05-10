@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DeepVision</title>
+
+    <style>
+
+        body{
+            margin:0;
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-family:Arial, sans-serif;
+            background: linear-gradient(to right, #667eea, #764ba2);
+        }
+
+        .container{
+            background:white;
+            width:380px;
+            padding:30px;
+            border-radius:20px;
+            text-align:center;
+            box-shadow:0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h1{
+            color:#333;
+            margin-bottom:10px;
+        }
+
+        p{
+            color:gray;
+            margin-bottom:25px;
+        }
+
+        .upload{
+            border:2px dashed #667eea;
+            padding:20px;
+            border-radius:15px;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .upload:hover{
+            background:#f5f5ff;
+        }
+
+        input[type="file"]{
+            display:none;
+        }
+
+        img{
+            width:100%;
+            margin-top:20px;
+            border-radius:10px;
+            display:none;
+        }
+
+        button{
+            width:100%;
+            margin-top:20px;
+            padding:12px;
+            border:none;
+            border-radius:10px;
+            background:#667eea;
+            color:white;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#5a67d8;
+        }
+
+        .result{
+            margin-top:20px;
+            padding:12px;
+            background:#f0f4ff;
+            border-radius:10px;
+            font-weight:bold;
+            font-size:20px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>DeepVision</h1>
+
+    <p>Diabetic Retinopathy Detection</p>
+
+    <form action="/predict" method="POST" enctype="multipart/form-data">
+
+        <label class="upload">
+
+            📷 Upload Retina Image
+
+            <input 
+                type="file" 
+                name="file"
+                accept="image/*"
+                required
+                onchange="previewImage(event)"
+            >
+
+        </label>
+
+        <img id="preview">
+
+        <button type="submit">
+            Predict
+        </button>
+
+    </form>
+
+    {% if prediction %}
+        <div class="result">
+            Prediction: {{ prediction }}
+        </div>
+    {% endif %}
+
+</div>
+
+<script>
+
+function previewImage(event){
+
+    let image = document.getElementById("preview");
+
+    image.src = URL.createObjectURL(event.target.files[0]);
+
+    image.style.display = "block";
+}
+
+</script>
+
+</body>
+</html>
